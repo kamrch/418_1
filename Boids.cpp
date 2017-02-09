@@ -145,6 +145,21 @@ void HSV2RGB(float H, float S, float V, float *R, float *G, float *B);
 
 // ******************** FUNCTIONS ************************
 
+//Self defined helper functions:
+
+int check_in_radius(float* b1, float* b2, int r){
+    float temp_x = b2[0]-b1[0];
+    float x = temp_x*temp_x;
+    float temp_y = b2[1]-b1[1];
+    float y = temp_y*temp_y;
+    float temp_z = b2[2]-b1[2];
+    float z = temp_z*temp_z;
+    if ((x+y+z)>(r*r)){
+        return 0;
+    }
+    return 1;
+}
+
 /*
    main()
 
@@ -668,9 +683,9 @@ void updateBoid(int i)
     pc_j[0][0] = 0;
     pc_j[0][1] = 0;
     pc_j[0][2] = 0;
-    for (b = 0; b<nBoids; j++){
+    for (b = 0; b<nBoids; b++){
         //check radius
-        if ( i != j && radius_center(r_rule1, Boid_Location[i], Boid_Location[j])==1){
+        if ( i != b && check_in_radius(Boid_Location[i], Boid_Location[b], r_rule3)==1){
             pc_j[0][0] += Boid_Location[b][0];
             pc_j[0][1] += Boid_Location[b][1];
             pc_j[0][2] += Boid_Location[b][2];
@@ -732,8 +747,8 @@ void updateBoid(int i)
     //Rule 2 codes:
     int k = 0;
     while (k < nBoids){
+        float d[2];
         for (int z = 0; z<2; z++){
-            float d[2];
             d[z] = powf(Boid_Location[i][z] - Boid_Location[k][z], 2);
         }
         //pseudo: IF b != bJ THEN
@@ -781,12 +796,11 @@ void updateBoid(int i)
     //rule 3 codes:
     int r3_count = 0;
     float  pv_j[1][3];
-    int q ;
-    for (int i = 0; i < 3; i++){
-        pv_j[0][i] = 0;
+    for (int z = 0; z < 3; z++){
+        pv_j[0][z] = 0;
     }
-    for (q = 0; q < nBoids; q++){
-        if (q != i && radius_center(r_rule3, Boid_Location[i], Boid_Location[q])==1){
+    for (int q = 0; q < nBoids; q++){
+        if (i != q && check_in_radius(Boid_Location[i], Boid_Location[q], r_rule3)==1){
             for (int i = 0; i < 3; i++){
                 pv_j[0][i] += Boid_Velocity[q][i];
             }
@@ -794,9 +808,9 @@ void updateBoid(int i)
         }
     }
 
-    V3[0][0] =  pv_i[0][0]/r3_count ;
-    V3[0][1] =  pv_i[0][1]/r3_count ;
-    V3[0][2] =  pv_i[0][2]/r3_count ;
+    V3[0][0] =  pv_j[0][0]/r3_count ;
+    V3[0][1] =  pv_j[0][1]/r3_count ;
+    V3[0][2] =  pv_j[0][2]/r3_count ;
     Boid_Velocity[i][0] += V3[0][0]*k_rule3;
     Boid_Velocity[i][1] += V3[0][1]*k_rule3;
     Boid_Velocity[i][2] += V3[0][2]*k_rule3;
