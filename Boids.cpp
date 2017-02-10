@@ -676,33 +676,33 @@ void updateBoid(int i)
  ///////////////////////////////////////////
 
     // Rule 1 codes:
-    float pc_j[1][3],V1[1][3],V2[1][3],V3[1][3];
+    float pc_j[3],V1[3],V2[3],V3[3];
     int r1_count;
     int b;
     r1_count = 0;
-    pc_j[0][0] = 0;
-    pc_j[0][1] = 0;
-    pc_j[0][2] = 0;
+    pc_j[0] = 0;
+    pc_j[1] = 0;
+    pc_j[2] = 0;
     for (b = 0; b<nBoids; b++){
         //check radius
         if ( i != b && check_in_radius(Boid_Location[i], Boid_Location[b], r_rule3)==1){
-            pc_j[0][0] += Boid_Location[b][0];
-            pc_j[0][1] += Boid_Location[b][1];
-            pc_j[0][2] += Boid_Location[b][2];
+            pc_j[0] += Boid_Location[b][0];
+            pc_j[1] += Boid_Location[b][1];
+            pc_j[2] += Boid_Location[b][2];
             r1_count++;
         }
     }
-    pc_j[0][0] =  pc_j[0][0] / r1_count;
-    pc_j[0][1] =  pc_j[0][1] / r1_count;
-    pc_j[0][2] =  pc_j[0][2] / r1_count;
+    pc_j[0] =  pc_j[0] / r1_count;
+    pc_j[1] =  pc_j[1] / r1_count;
+    pc_j[2] =  pc_j[2] / r1_count;
 
-    V1[0][0] = pc_j[0][0] - Boid_Location[i][0];
-    V1[0][1] = pc_j[0][1] - Boid_Location[i][1];
-    V1[0][2] = pc_j[0][2] - Boid_Location[i][2];
+    V1[0] = pc_j[0] - Boid_Location[i][0];
+    V1[1] = pc_j[1] - Boid_Location[i][1];
+    V1[2] = pc_j[2] - Boid_Location[i][2];
 
-    Boid_Velocity[i][0] +=  V1[0][0] * k_rule1;
-    Boid_Velocity[i][1] +=  V1[0][1] * k_rule1;
-    Boid_Velocity[i][2] +=  V1[0][2] * k_rule1;
+    Boid_Velocity[i][0] +=  V1[0] * k_rule1;
+    Boid_Velocity[i][1] +=  V1[1] * k_rule1;
+    Boid_Velocity[i][2] +=  V1[2] * k_rule1;
 
 
 
@@ -752,13 +752,13 @@ void updateBoid(int i)
             d[z] = powf(Boid_Location[i][z] - Boid_Location[k][z], 2);
         }
         //pseudo: IF b != bJ THEN
-        if (k!=i && r_rule2>sqrtf(d[0]+d[1]+d[2])){
-            V2[0][0] = Boid_Location[k][0] - Boid_Location[i][0];
-            V2[0][1] = Boid_Location[k][1] - Boid_Location[i][1];
-            V2[0][2] = Boid_Location[k][2] - Boid_Location[i][2];
-            Boid_Velocity[i][0] -= V2[0][0]*k_rule2;
-            Boid_Velocity[i][1] -= V2[0][1]*k_rule2;
-            Boid_Velocity[i][2] -= V2[0][2]*k_rule2;
+        if (k!=i && r_rule2 > sqrtf(d[0]+d[1]+d[2])){
+            V2[0] = Boid_Location[k][0] - Boid_Location[i][0];
+            V2[1] = Boid_Location[k][1] - Boid_Location[i][1];
+            V2[2] = Boid_Location[k][2] - Boid_Location[i][2];
+            Boid_Velocity[i][0] -= V2[0]*k_rule2;
+            Boid_Velocity[i][1] -= V2[1]*k_rule2;
+            Boid_Velocity[i][2] -= V2[2]*k_rule2;
         }
         k++;
     }
@@ -795,25 +795,25 @@ void updateBoid(int i)
 
     //rule 3 codes:
     int r3_count = 0;
-    float  pv_j[1][3];
+    float  pv_j[3];
     for (int z = 0; z < 3; z++){
-        pv_j[0][z] = 0;
+        pv_j[z] = 0;
     }
     for (int q = 0; q < nBoids; q++){
         if (i != q && check_in_radius(Boid_Location[i], Boid_Location[q], r_rule3)==1){
             for (int i = 0; i < 3; i++){
-                pv_j[0][i] += Boid_Velocity[q][i];
+                pv_j[i] += Boid_Velocity[q][i];
             }
             r3_count += 1;
         }
     }
 
-    V3[0][0] =  pv_j[0][0]/r3_count ;
-    V3[0][1] =  pv_j[0][1]/r3_count ;
-    V3[0][2] =  pv_j[0][2]/r3_count ;
-    Boid_Velocity[i][0] += V3[0][0]*k_rule3;
-    Boid_Velocity[i][1] += V3[0][1]*k_rule3;
-    Boid_Velocity[i][2] += V3[0][2]*k_rule3;
+    V3[0] =  pv_j[0]/r3_count ;
+    V3[1] =  pv_j[1]/r3_count ;
+    V3[2] =  pv_j[2]/r3_count ;
+    Boid_Velocity[i][0] += V3[0]*k_rule3;
+    Boid_Velocity[i][1] += V3[1]*k_rule3;
+    Boid_Velocity[i][2] += V3[2]*k_rule3;
 
 
 
@@ -940,6 +940,11 @@ void updateBoid(int i)
  // Finally (phew!) update the position
  // of this boid.
  ///////////////////////////////////////////
+    // update boid codes:
+    for (int z = 0; z < 3; z++){
+        Boid_Location[i][z] += Boid_Velocity[i][z];
+    }
+
 
  ///////////////////////////////////////////
  // CRUNCHY:
