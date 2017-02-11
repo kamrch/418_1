@@ -42,7 +42,7 @@ __________________________________________________________________
 __________________________________________________________________
 3) Describe any //CRUNCHY: extensions you implemented
 
-
+- Added trails to the boids after they moved
 
 
 
@@ -52,12 +52,14 @@ __________________________________________________________________
 
 a) What is the time complexity of the boid update (in big Oh notation),
    justify.
-   Time complexity is O(n^2) since every boid needs to check against
+
+   Ans: Time complexity is O(n^2) since every boid needs to check against
    all of the other boids.
 
 b) What could you do to make the update more efficient?
-	An array or some data structure that stores the distance between two boids, so it takes less time
-	to maintain this structure than to loop through all boids.
+
+    Ans: An array or some data structure that stores the distance between two boids, so it takes less time
+    to maintain this structure than to loop through all boids.
 
 
 c) What is the greatest bottleneck of the program:

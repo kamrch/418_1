@@ -50,31 +50,31 @@ Description/value		Completed	Partial	    Not done	Mark
   and global rotation.
   (5 marks)
 
-* Correctly implemented
+* Correctly implemented		X
   (working!) Boid update
   rule 1
   (5 marks)
 
-* Correctly implemented
+* Correctly implemented		X
   (working) Boid update
   rule 2
   (5 marks)
 
-* Correctly implemented
+* Correctly implemented		X
   (working) Boid update
   rule 3   
   (5 marks)
 
-* Correctly implemented
+* Correctly implemented		X
   (working) Boid update
   rule 0 (Paco's rule)
   (5 marks)
 
-* Correctly implemented
+* Correctly implemented		X
   Boid position update
   (5 marks)
 
-* Completed boid drawing
+* Completed boid drawing	X
   function with something
   that is not a simple
   sphere, single polygon,
