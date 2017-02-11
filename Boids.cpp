@@ -1117,11 +1117,6 @@ void drawBoid(int i)
     // gluDisk(my_quad,0.3,0.6,10,10);       // Draw this boid
     //glPopMatrix();         
     
-    //Butterfly body
-    glPushMatrix();
-    glTranslatef(Boid_Location[i][0],Boid_Location[i][1],Boid_Location[i][2]);
-    gluCylinder(my_quad, 0.3, 0.5, 3, 10, 10);
-    glPopMatrix();
     
     //Right wing
     glPushMatrix();
@@ -1135,6 +1130,11 @@ void drawBoid(int i)
     gluDisk(my_quad,0,2,10,10);       // Draw this boid
     glPopMatrix(); 
     
+    //Butterfly body
+    glPushMatrix();
+    glTranslatef(Boid_Location[i][0],Boid_Location[i][1],Boid_Location[i][2]);
+    gluCylinder(my_quad, 0.3, 0.5, 3, 10, 10);
+    glPopMatrix();
     
     
     
@@ -1166,25 +1166,7 @@ void drawBoid(int i)
     //
     ///////////////////////////////////////////
     
-    
-    float d[3];
-    if (prev_locations[i]){
-        int length = 500; //trail's length
-        //get coordinates of previous location
-        for (int z=0; z<3; z++){
-            d[z] = (Boid_Location[i][z] - prev_locations[i][z]) / length;
-        }      
-        //Draw trails using GL_LINE_STRIP at the tail
-        glBegin(GL_LINE_STRIP);
-        for (int q=0; q<length; q++){
-            //glPushMatrix();           
-            glTranslatef(Boid_Location[i][0], Boid_Location[i][1], Boid_Location[i][2]-10);
-            glVertex3f(Boid_Location[i][0] - q*d[0], Boid_Location[i][1]- q*d[1], Boid_Location[i][2]- q*d[2]);        
-            //glPopMatrix();
-        }
-        glEnd();  
-    }
-    //glPopMatrix();
+   
     
 }
 

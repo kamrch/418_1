@@ -22,13 +22,12 @@ __________________________________________________________________
    Is this the optimal way to implement this
    rule? can you see any problems or ways
    to improve this bit?
+  
   Ans: No this is not the optimal way. The problem is each boid has to 
 		loop through all of the other boids which increases the program's
 		overall runtime. An easier way to find the center of mass would solve this
 		issue.
-		
-   QUESTION: Why add inertia at the end and
-		not at the beginning?
+  QUESTION: Why add inertia at the end and not at the beginning?
 	Ans: The current boid's velocity would not change until we update it after going through the rules, 
 		therefore if we add the inertia at the beginning, the velocity that changes will require
 		an update to the inertia so we will have to perform an extra step, which is inefficient.
@@ -42,7 +41,7 @@ __________________________________________________________________
 __________________________________________________________________
 3) Describe any //CRUNCHY: extensions you implemented
 
-- Added trails to the boids after they moved
+	N/A
 
 
 
@@ -69,9 +68,9 @@ c) What is the greatest bottleneck of the program:
 
     Why is that? justify your answer.
 	
-	Ans: The boid display code, because it takes much more time to tune and fix the codes so the output
-	display matches my expectations. The boid update code is challenging at the beginning but once
-	I have figured out how to start the first rule I can complete the rest rather quickly.
+    Ans: The boid display code, because it takes much more time to tune and fix the codes so the output
+    display matches my expectations. The boid update code is challenging at the beginning but once
+    I have figured out how to start the first rule I can complete the rest rather quickly.
 
 d) How would you adapt the idea behind Boids to swarms of running
    creatures (e.g. a herd of charging animals, an army of CGI
